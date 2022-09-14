@@ -23,3 +23,15 @@ def octant_ident(x,y,z):
         return -3
 
 
+#reading the input file
+data_framing = pd.read_csv("octant_input.csv") 
+
+# doing data pre-prcessing:
+data_framing.at[0,'u_mean']=data_framing['U'].mean() 
+data_framing.at[0,'v_mean']=data_framing['V'].mean()
+data_framing.at[0,'w_mean']=data_framing['W'].mean()
+
+data_framing['U-u_mean']=data_framing['U']-data_framing.at[0,'u_mean']
+data_framing['V-v_mean']=data_framing['V']-data_framing.at[0,'v_mean']
+data_framing['W-w_mean']=data_framing['W']-data_framing.at[0,'w_mean']
+
