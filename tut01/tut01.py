@@ -51,3 +51,41 @@ data_framing.at[0,'2']  = data_framing['octant'].value_counts()[2]
 data_framing.at[0,'3'] = data_framing['octant'].value_counts()[3]
 data_framing.at[0,'4'] = data_framing['octant'].value_counts()[4]
 
+#asking user for input
+mod = int(input("PLEASE ENTER A VALUE: "))
+data_framing.at[1,'octant ID']=mod
+
+l = len(data_framing['octant'])
+a=0
+#looping to split the data
+while(l>0):
+
+    temp = mod
+    if a == 0: 
+        x = 0
+    else:
+        x = a*temp 
+
+    if size<mod:
+        mod = l
+        l = 0
+    
+    y = a*temp+mod - 1
+    data_framing1 = data_framing.loc[x:y]
+    #inserting range and their corresponding data
+    t1 = str(x)
+    t2= str(y)
+    data_framing.at[a+2,'octant ID'] = t1 +'-'+t2 
+     
+    data_framing.at[a+2,'-1'] = data_framing1['octant'].value_counts()[-1]
+    data_framing.at[a+2,'-2'] = data_framing1['octant'].value_counts()[-2]
+    data_framing.at[a+2,'-3'] = data_framing1['octant'].value_counts()[-3]
+    data_framing.at[a+2,'-4'] = data_framing1['octant'].value_counts()[-4]
+    data_framing.at[a+2,'1']  = data_framing1['octant'].value_counts()[1]
+    data_framing.at[a+2,'2']  = data_framing1['octant'].value_counts()[2]
+    data_framing.at[a+2,'3'] = data_framing1['octant'].value_counts()[3]
+    data_framing.at[a+2,'4'] = data_framing1['octant'].value_counts()[4]
+
+    a += 1
+    l -= mod
+
