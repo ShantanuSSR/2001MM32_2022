@@ -66,7 +66,7 @@ while(l>0):
     else:
         x = a*temp 
 
-    if size<mod:
+    if l<mod:
         mod = l
         l = 0
     
