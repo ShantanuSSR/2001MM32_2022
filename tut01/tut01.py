@@ -1,8 +1,25 @@
-def factorial(x):
-    fact = 1
-    for i in range(1,x+1):
-        fact = fact*i
-    print(f"The factorial of {x} is", fact)
+#Shantanu Singh 2001MM32
 
-x=int(input("Enter the number whose factorial is to be found"))
-factorial(x)
+#importing pandas
+import pandas as pd 
+
+#function for categorizing the data into different octant 
+def octant_ident(x,y,z):
+    if x>0 and y>0 and z>0:
+        return 1 
+    if x>0 and y>0 and z<0:
+        return -1 
+    if x>0 and y<0 and z>0:
+        return  4 
+    if x>0 and y<0 and z<0:
+        return -4
+    if x<0 and y>0 and z>0:
+        return 2 
+    if x<0 and y>0 and z<0:
+        return -2 
+    if x<0 and y<0 and z>0:
+        return  3 
+    if x<0 and y<0 and z<0:
+        return -3
+
+
