@@ -100,5 +100,80 @@ def octant_transition_count(mod=5000):
             transition[i][j] = temp + 1
         x = x-1
 
+     data_framing.at[1, "dummy"] = "User Input"
+    data_framing.rename(columns={'dummy': ''}, inplace=True)
+
+    data_framing["dummy"] = pd.Series([], dtype='float64')
+    data_framing.rename(columns={'dummy': ''}, inplace=True)
+
+    data_framing[1] = pd.Series([], dtype='float64')
+    data_framing[-1] = pd.Series([], dtype='float64')
+    data_framing[2] = pd.Series([], dtype='float64')
+    data_framing[-2] = pd.Series([], dtype='float64')
+    data_framing[3] = pd.Series([], dtype='float64')
+    data_framing[-3] = pd.Series([], dtype='float64')
+    data_framing[4] = pd.Series([], dtype='float64')
+    data_framing[-4] = pd.Series([], dtype='float64')
+
+    data_framing.iat[0, 12] = "count_dictl Count"
+    for x in count_dict:
+        data_framing.at[0, x] = count_dict[x]
+
+    data_framing.iat[1, 12] = "Mod " + str(mod)
+
+    row = 2
+    for x in range_count_dict:
+        data_framing.iat[row, 12] = x
+        arr = range_count_dict[x]
+        for i in arr:
+            data_framing.at[row, i] = arr[i]
+        row += 1
+    data_framing.iat[row, 12] = "Verified"
+    for x in count_dict:
+        data_framing.at[row, x] = count_dict[x]
+
+    decode = {0: 1, 1: -1, 2: 2, 3: -2, 4: 3, 5: -3, 6: 4, 7: -4}
+
+    row += 3
+    data_framing.iat[row, 12] = "count_dictl Transition Count"
+    row += 1
+    data_framing.iat[row, 13] = "To"
+    row += 1
+    data_framing.iat[row, 12] = "Count"
+    for x in pos:
+        data_framing.at[row, x] = x
+    row += 1
+    data_framing.iat[row, 11] = "From"
+    c = 0
+    for i in range(8):
+        data_framing.iat[row, 12] = decode[c]
+        for j in range(8):
+            data_framing.at[row, decode[j]] = transition[i][j]
+        row += 1
+        c += 1
+
+
+    for x in range_transition:
+        mod_trans = range_transition[x]
+
+        row += 2
+        data_framing.iat[row, 12] = "Mod Transition Count"
+        row += 1
+        data_framing.iat[row, 12] = x
+        data_framing.iat[row, 13] = "To"
+        row += 1
+        data_framing.iat[row, 12] = "Count"
+        for x in pos:
+            data_framing.at[row, x] = x
+        row += 1
+        data_framing.iat[row, 11] = "From"
+        c = 0
+        for i in range(8):
+            data_framing.iat[row, 12] = decode[c]
+            for j in range(8):
+                data_framing.at[row, decode[j]] = mod_trans[i][j]
+            row += 1
+            c += 1
+
 
 octant_transition_count(mod)
