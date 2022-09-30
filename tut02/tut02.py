@@ -174,6 +174,19 @@ def octant_transition_count(mod=5000):
                 data_framing.at[row, decode[j]] = mod_trans[i][j]
             row += 1
             c += 1
+    try:
+            data_framing.to_excel('output_octant_transition_identify.xlsx',
+                        index=False)  # writing the dataframe to excel file
+    except:
+        print("Error: Cannot create Excel file")
+
+    print("Finished Executing")
 
 
-octant_transition_count(mod)
+try:
+    mod = 5000  # variable value can be changed
+    octant_transition_count(mod)
+except:
+    print("Some error occured")
+
+
