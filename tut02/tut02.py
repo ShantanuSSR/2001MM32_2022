@@ -1,13 +1,27 @@
+import pandas as pd
+
 def octant_transition_count(mod=5000):
-###Code
+     try:
+        # reading excel to pandas dataframe
+        data_framing = pd.read_excel('input_octant_transition_identify.xlsx')
+    except:
+        print("Error: File not found")
+    u_mean = data_framing["U"].mean()
+    v_mean = data_framing["V"].mean()
+    w_mean = data_framing["W"].mean()
 
-from platform import python_version
-ver = python_version()
+    data_framing['U avg'] = pd.Series([u_mean], dtype='float64')
+    data_framing['V avg'] = pd.Series([v_mean], dtype='float64')
+    data_framing['W avg'] = pd.Series([w_mean], dtype='float64')
 
-if ver == "3.8.10":
-    print("Correct Version Installed")
-else:
-    print("Please install 3.8.10. Instruction are present in the GitHub Repo/Webmail. Url: https://pastebin.com/nvibxmjw")
+    data_framing["U'=U - U avg"] = data_framing['U'] - u_mean
+    data_framing["V'=V - V avg"] = data_framing['V'] - v_mean
+    data_framing["W'=W - W avg"] = data_framing['W'] - w_mean
 
-mod=5000
+    oct = []
+    len = data_framing.shape[0]
+
+    val = 0
+
+
 octant_transition_count(mod)
