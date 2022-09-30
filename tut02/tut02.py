@@ -100,7 +100,7 @@ def octant_transition_count(mod=5000):
             transition[i][j] = temp + 1
         x = x-1
 
-     data_framing.at[1, "dummy"] = "User Input"
+    data_framing.at[1, "dummy"] = "User Input"
     data_framing.rename(columns={'dummy': ''}, inplace=True)
 
     data_framing["dummy"] = pd.Series([], dtype='float64')
