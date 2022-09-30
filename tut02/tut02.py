@@ -47,6 +47,58 @@ def octant_transition_count(mod=5000):
             if data_framing.at[i, "W'=W - W avg"] < 0:
                 val = val*(-1)
             oct.append(val)
+    data_framing['Octact'] = oct
+
+    count_dict = {1: 0, -1: 0, 2: 0, -2: 0, 3: 0, -3: 0, 4: 0, -4: 0}
+    range_count_dict = {}
+
+    lo = 0
+    hi = mod
+
+    while lo < len:  # finding count for each octact
+        for x in range(lo, min(hi, len)):
+            count_dict[data_framing.at[x, 'Octact']] += 1
+        range_count_dict[str(lo) + '-' + str(hi-1)] = count_dict
+
+        count_dict = {1: 0, -1: 0, 2: 0, -2: 0, 3: 0, -3: 0, 4: 0, -4: 0}
+
+        lo = hi 
+        hi = hi + mod
+
+    for x in range(len):
+        count_dict[data_framing.at[x, 'Octact']] += 1
+
+    transition = [[0]*8 for _ in range(8)]
+    range_transition = {}
+
+    lo = 0
+    hi = mod
+
+    pos = {1: 0, -1: 1, 2: 2, -2: 3, 3: 4, -3: 5, 4: 6, -4: 7}
+
+    while lo < len:  # finding the transition count
+        for x in range(lo, min(hi, len)):
+            if x+1 < len:
+                i = pos[data_framing.at[x, 'Octact']]
+                j = pos[data_framing.at[x+1, 'Octact']]
+
+                transition[i][j] += 1
+
+        range_transition[str(lo) + '-' + str(hi-1)] = transition
+
+        transition = [[0]*8 for _ in range(8)]
+
+        lo = hi 
+        hi = hi + mod
+    x = len
+    while x>=0:
+        if x+1 < len:
+            i = pos[data_framing.at[x, 'Octact']]
+            j = pos[data_framing.at[x+1, 'Octact']]
+
+            temp = transition[i][j]
+            transition[i][j] = temp + 1
+        x = x-1
 
 
 octant_transition_count(mod)
