@@ -130,6 +130,24 @@ def octant_longest_subsequence_count():
             l8.append(c8)
             c8 = 1
 
+    # Here at this step we are storing the maximum of each list and total amount of time appearing in the lists
+    max1 = max(l1)
+    cf1 = l1.count(max1)
+    max2 = max(l2)
+    cf2 = l2.count(max2)
+    max3 = max(l3)
+    cf3 = l3.count(max3)
+    max4 = max(l4)
+    cf4 = l4.count(max4)
+    max5 = max(l5)
+    cf5 = l5.count(max5)
+    max6 = max(l6)
+    cf6 = l6.count(max6)
+    max7 = max(l7)
+    cf7 = l7.count(max7)
+    max8 = max(l8)
+    cf8 = l8.count(max8)
+
 from platform import python_version
 ver = python_version()
 
