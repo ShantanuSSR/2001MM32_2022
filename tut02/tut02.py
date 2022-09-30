@@ -1,8 +1,8 @@
 import pandas as pd
 
 def octant_transition_count(mod=5000):
-     try:
-        # reading excel to pandas dataframe
+    
+    try:
         data_framing = pd.read_excel('input_octant_transition_identify.xlsx')
     except:
         print("Error: File not found")
