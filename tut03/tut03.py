@@ -54,7 +54,81 @@ def octant_longest_subsequence_count():
         if (x < 0 and y < 0 and z < 0):
             df2.loc[n, 'Octant'] = -3
 
-    print(df2)
+    # print(df2)
+    # the lists that is l1,l2,l3......l8 store the total no of repeated counts for 1,-1,2,-2 .... 
+    # the values in c1,c2,c3...c8 stores how many times -1,1,-2,2.... respectively appears
+    octant = df2['Octant']
+    l1 = []
+    c1 = 1
+    for i in range(1,len1):
+        if octant[i-1]==1 and octant[i]==1:
+            c1 = c1 + 1
+        else:
+            l1.append(c1)
+            c1 = 1
+
+    l2 = []
+    c2 = 1
+    for i in range(1,len1):
+        if octant[i-1]==-1 and octant[i]==-1:
+            c2 = c2 + 1
+        else:
+            l2.append(c2)
+            c2 = 1
+    
+    l3 = []
+    c3 = 1
+    for i in range(1,len1):
+        if octant[i-1]==2 and octant[i]==2:
+            c3 = c3 + 1
+        else:
+            l3.append(c3)
+            c3 = 1
+    
+    l4 = []
+    c4 = 1
+    for i in range(1,len1):
+        if octant[i-1]==-2 and octant[i]==-2:
+            c4 = c4 + 1
+        else:
+            l4.append(c4)
+            c4 = 1
+    
+    l5 = []
+    c5 = 1
+    for i in range(1,len1):
+        if octant[i-1]==3 and octant[i]==3:
+            c5 = c5 + 1
+        else:
+            l5.append(c5)
+            c5 = 1
+    
+    l6 = []
+    c6 = 1
+    for i in range(1,len1):
+        if octant[i-1]==-3 and octant[i]==-3:
+            c6 = c6 + 1
+        else:
+            l6.append(c6)
+            c6 = 1
+    
+    l7 = []
+    c7 = 1
+    for i in range(1,len1):
+        if octant[i-1]==4 and octant[i]==4:
+            c7 = c7 + 1
+        else:
+            l7.append(c7)
+            c7 = 1
+    
+    l8 = []
+    c8 = 1
+    for i in range(1,len1):
+        if octant[i-1]==-4 and octant[i]==-4:
+            c8 = c8 + 1
+        else:
+            l8.append(c8)
+            c8 = 1
 
 from platform import python_version
 ver = python_version()
