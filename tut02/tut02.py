@@ -22,6 +22,31 @@ def octant_transition_count(mod=5000):
     len = data_framing.shape[0]
 
     val = 0
+    for i in range(len):  # finding the octact
+
+        if data_framing.at[i, "U'=U - U avg"] >= 0 and data_framing.at[i, "V'=V - V avg"] >= 0:
+            val = 1
+            if data_framing.at[i, "W'=W - W avg"] < 0:
+                val = val*(-1)
+            oct.append(val)
+
+        elif data_framing.at[i, "U'=U - U avg"] < 0 and data_framing.at[i, "V'=V - V avg"] >= 0:
+            val = 2
+            if data_framing.at[i, "W'=W - W avg"] < 0:
+                val = val*(-1)
+            oct.append(val)
+
+        elif data_framing.at[i, "U'=U - U avg"] < 0 and data_framing.at[i, "V'=V - V avg"] < 0:
+            val = 3
+            if data_framing.at[i, "W'=W - W avg"] < 0:
+                val = val*(-1)
+            oct.append(val)
+
+        elif data_framing.at[i, "U'=U - U avg"] >= 0 and data_framing.at[i, "V'=V - V avg"] < 0:
+            val = 4
+            if data_framing.at[i, "W'=W - W avg"] < 0:
+                val = val*(-1)
+            oct.append(val)
 
 
 octant_transition_count(mod)
