@@ -148,6 +148,18 @@ def octant_longest_subsequence_count():
     max8 = max(l8)
     cf8 = l8.count(max8)
 
+    # here we are actually creating the columns which we will append later
+    col1 = ["" for i in range(9)]
+    col2 = ["Count","1","-1","2","-2","3","-3","4","-4"]
+    col3 = ["Count Subsequence Length"] + [max1,max2,max3,max4,max5,max6,max7,max8]
+    col4 = ["Count"]+[cf1,cf2,cf3,cf4,cf5,cf6,cf7,cf8]
+    # adding columns together to the main dataframe
+    f = [col1,col2,col3,col4]
+    # print(f)
+    f_ = pd.DataFrame(f).transpose()
+    df2 = pd.concat([df2,f_],axis = 1)
+    df2.to_excel("output_octant_longest_subsequence.xlsx", index = False)
+
 from platform import python_version
 ver = python_version()
 
