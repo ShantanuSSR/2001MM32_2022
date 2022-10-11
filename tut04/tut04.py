@@ -161,3 +161,120 @@ def octant_longest_subsequence_count():
     # print(f)
     f_ = pd.DataFrame(f).transpose()
     df2 = pd.concat([df2,f_],axis = 1)
+
+    # Now here we are creating two lists such that we can keep track of the starting and ending time of maximum counts
+    start_point = []
+    end_point=[]
+    c1 = 1
+    for i in range(1,len1):
+        if octant[i-1]==1 and octant[i]==1:
+            c1 = c1 + 1
+            if max1 == c1:
+                initial = i-max1+1              # Here we are declaring a variable initial which will depict the starting time index
+                end = i                         # Here we are declaring a variable end which will depict the ending point index
+                start_point.append(time[initial])     # Here we are appending the starting and ending times in the lists respectively
+                end_point.append(time[end])          
+        else:
+            c1 = 1                     # In case we come here it means maximum value is achieved earlier and is appended so making initial and end again as zero
+            initial = 0
+            end = 0
+
+    
+    c2 = 1
+    for i in range(1,len1):
+        if octant[i-1]==-1 and octant[i]==-1:
+            c2 = c2 + 1
+            if max2 == c2:
+                initial = i-max2+1
+                end = i
+                start_point.append(time[initial])
+                end_point.append(time[end])
+        else:
+            c2 = 1
+            initial = 0
+            end = 0
+    
+    c3 = 1
+    for i in range(1,len1):
+        if octant[i-1]==2 and octant[i]==2:
+            c3 = c3 + 1
+            if max3 == c3:
+                initial = i-max3+1
+                end = i
+                start_point.append(time[initial])
+                end_point.append(time[end])
+        else:
+            c3 = 1
+            initial = 0
+            end = 0
+
+    c4 = 1
+    for i in range(1,len1):
+        if octant[i-1]==-2 and octant[i]==-2:
+            c4 = c4 + 1
+            if max4 == c4:
+                initial = i-max4+1
+                end = i
+                start_point.append(time[initial])
+                end_point.append(time[end])
+        else:
+            c4 = 1
+            initial = 0
+            end = 0
+
+    c5 = 1
+    for i in range(1,len1):
+        if octant[i-1]==3 and octant[i]==3:
+            c5 = c5 + 1
+            if max5 == c5:
+                initial = i-max5+1
+                end = i
+                start_point.append(time[initial])
+                end_point.append(time[end])
+        else:
+            c5 = 1
+            initial = 0
+            end = 0
+
+    c6 = 1
+    for i in range(1,len1):
+        if octant[i-1]==-3 and octant[i]==-3:
+            c6 = c6 + 1
+            if max6 == c6:
+                initial = i-max6+1
+                end = i
+                start_point.append(time[initial])
+                end_point.append(time[end])
+        else:
+            c6 = 1
+            initial = 0
+            end = 0
+
+    c7 = 1
+    for i in range(1,len1):
+        if octant[i-1]==4 and octant[i]==4:
+            c7 = c7 + 1
+            if max7 == c7:
+                initial = i-max7+1
+                end = i
+                start_point.append(time[initial])
+                end_point.append(time[end])
+        else:
+            c7 = 1
+            initial = 0
+            end = 0
+
+    c8 = 1
+    for i in range(1,len1):
+        if octant[i-1]==-4 and octant[i]==-4:
+            c8 = c8 + 1
+            if max8 == c8:
+                initial = i-max8+1
+                end = i
+                start_point.append(time[initial])
+                end_point.append(time[end])
+        else:
+            c8 = 1
+            initial = 0
+            end = 0
+    
