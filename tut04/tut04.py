@@ -133,3 +133,31 @@ def octant_longest_subsequence_count():
             l8.append(c8)
             c8 = 1
     
+    # Here at this step we are storing the maximum of each list and total amount of time appearing in the lists
+    max1 = max(l1)
+    cf1 = l1.count(max1)
+    max2 = max(l2)
+    cf2 = l2.count(max2)
+    max3 = max(l3)
+    cf3 = l3.count(max3)
+    max4 = max(l4)
+    cf4 = l4.count(max4)
+    max5 = max(l5)
+    cf5 = l5.count(max5)
+    max6 = max(l6)
+    cf6 = l6.count(max6)
+    max7 = max(l7)
+    cf7 = l7.count(max7)
+    max8 = max(l8)
+    cf8 = l8.count(max8)
+    
+    # here we are actually creating the columns which we will append later
+    col1 = ["" for i in range(9)]
+    col2 = ["Count","1","-1","2","-2","3","-3","4","-4"]
+    col3 = ["Count Subsequence Length"] + [max1,max2,max3,max4,max5,max6,max7,max8]
+    col4 = ["Count"]+[cf1,cf2,cf3,cf4,cf5,cf6,cf7,cf8]
+    # adding columns together to the main dataframe
+    f = [col1,col2,col3,col4]
+    # print(f)
+    f_ = pd.DataFrame(f).transpose()
+    df2 = pd.concat([df2,f_],axis = 1)
