@@ -278,3 +278,36 @@ def octant_longest_subsequence_count():
             initial = 0
             end = 0
     
+    # Maintaining the variables overall_max and overall_count as they will be used further
+    overall_max = [max1,max2,max3,max4,max5,max6,max7,max8]
+    overall_count = [cf1,cf2,cf3,cf4,cf5,cf6,cf7,cf8]
+    # applying simple logic so as by applying loop and maintaining columns
+    col5 = ["" for i in range(17+sum(overall_count))]
+    col6 = ['Count']
+    for i in range(8):
+        col6.append(col2[i+1])
+        col6.append("Time")
+        for j in range(overall_count[i]):
+            col6.append('')
+    col7 = ["Count Subsequence Length"] 
+    for i in range(8):
+        col7.append(overall_max[i])
+        col7.append("From")
+        for j in range(overall_count[i]):
+            col7.append(start_point[0])
+            del start_point[0]
+    col8 = ['count']
+    for i in range(8):
+        col8.append(overall_count[i])
+        col8.append("To")
+        for j in range(overall_count[i]):
+            col8.append(end_point[0])
+            del end_point[0]
+    
+
+    f = [col5,col6,col7,col8]
+    # print(f)
+    f_ = pd.DataFrame(f).transpose()
+    df2 = pd.concat([df2,f_],axis = 1)
+    
+    df2.to_excel("output_octant_longest_subsequence.xlsx", index = False)
