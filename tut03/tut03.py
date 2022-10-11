@@ -60,6 +60,9 @@ def octant_longest_subsequence_count():
         # the lists that is l1,l2,l3......l8 store the total no of repeated counts for 1,-1,2,-2 .... 
         # the values in c1,c2,c3...c8 stores how many times -1,1,-2,2.... respectively appears
         octant = df2['Octant']
+        # start_time = []
+        # end_time=[]
+        # time = df2['Time']
         l1 = []
         c1 = 1
         for i in range(1,len1):
@@ -68,6 +71,8 @@ def octant_longest_subsequence_count():
             else:
                 l1.append(c1)
                 c1 = 1
+        # start_time.append(time[initial])
+        # end_time.append(time[end])
 
         l2 = []
         c2 = 1
@@ -77,7 +82,7 @@ def octant_longest_subsequence_count():
             else:
                 l2.append(c2)
                 c2 = 1
-        
+
         l3 = []
         c3 = 1
         for i in range(1,len1):
@@ -86,7 +91,7 @@ def octant_longest_subsequence_count():
             else:
                 l3.append(c3)
                 c3 = 1
-        
+
         l4 = []
         c4 = 1
         for i in range(1,len1):
@@ -95,7 +100,7 @@ def octant_longest_subsequence_count():
             else:
                 l4.append(c4)
                 c4 = 1
-        
+
         l5 = []
         c5 = 1
         for i in range(1,len1):
@@ -104,7 +109,7 @@ def octant_longest_subsequence_count():
             else:
                 l5.append(c5)
                 c5 = 1
-        
+
         l6 = []
         c6 = 1
         for i in range(1,len1):
@@ -113,7 +118,7 @@ def octant_longest_subsequence_count():
             else:
                 l6.append(c6)
                 c6 = 1
-        
+
         l7 = []
         c7 = 1
         for i in range(1,len1):
@@ -122,7 +127,7 @@ def octant_longest_subsequence_count():
             else:
                 l7.append(c7)
                 c7 = 1
-        
+
         l8 = []
         c8 = 1
         for i in range(1,len1):
@@ -131,7 +136,7 @@ def octant_longest_subsequence_count():
             else:
                 l8.append(c8)
                 c8 = 1
-
+        
         # Here at this step we are storing the maximum of each list and total amount of time appearing in the lists
         max1 = max(l1)
         cf1 = l1.count(max1)
