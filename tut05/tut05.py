@@ -206,3 +206,55 @@ def avg_calc():
         #calculating and saving W-w_avg in the sheet
         sub_w_avg = sheet.cell(row=i,column=4).value-w_avg
         sheet.cell(row=i,column=10).value=sub_w_avg
+
+def octant_identification(mod):
+    if mod>30000:
+        raise Exception('mod value should be less than or equal to 30000')
+    #function to calculate and save average value of U, V, W
+    avg_calc()
+
+    sheet['K1']='Octant'
+    #initializing count values of each octant sign as 0
+    for j in range(14,22):
+        sheet.cell(row=3,column=j).value=0
+    #saving the sign of the octant
+    for i in range(2,row_count+1):
+        try:
+            sub_u_avg=sheet.cell(row=i,column=8).value
+            sub_v_avg=sheet.cell(row=i,column=9).value
+            sub_w_avg=sheet.cell(row=i,column=10).value
+            try:
+                octant_sign=check_octant_sign(sub_u_avg,sub_v_avg,sub_w_avg)
+            except NameError:
+                print('Either the function is not defined or is not named correctly')
+                exit()
+            if octant_sign==1:
+                sheet.cell(row=3,column=14).value+=1
+            elif octant_sign==-1:
+                sheet.cell(row=3,column=15).value+=1
+            elif octant_sign==2:
+                sheet.cell(row=3,column=16).value+=1
+            elif octant_sign==-2:
+                sheet.cell(row=3,column=17).value+=1
+            elif octant_sign==3:
+                sheet.cell(row=3,column=18).value+=1
+            elif octant_sign==-3:
+                sheet.cell(row=3,column=19).value+=1
+            elif octant_sign==4:
+                sheet.cell(row=3,column=20).value+=1
+            elif octant_sign==-4:
+                sheet.cell(row=3,column=21).value+=1
+            sheet.cell(row=i,column=11).value=octant_sign
+        except FileNotFoundError:
+            print('File not found!')
+            exit()
+    sheet['L4']='user input'
+    sheet['M2']='Octant ID'
+    sheet['M3']='Overall Count'
+    sheet['M4']= 'Mod '+ str(mod)
+    # creating headng of the columns with assing value as 1, -1, 2, -2, 3, -3, 4, -4 
+    for j, label in enumerate(Octant_Sign_List):
+        sheet.cell(row=2, column=j+14).value=label
+        
+    # calling count_in_range function to find the octant sign
+    count_in_range(mod)
