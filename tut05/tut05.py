@@ -279,7 +279,7 @@ except NameError:
     print('function does not exist')
 
 #saving the output file
-wb.save('octant_output_ranking_excel1.xlsx')
+wb.save('octant_output_ranking_excel.xlsx')
 
 #This shall be the last lines of the code.
 end_time = datetime.now()
