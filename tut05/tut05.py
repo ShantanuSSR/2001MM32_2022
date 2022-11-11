@@ -79,3 +79,46 @@ def octant_ranking(mod):
         except FileNotFoundError:
             print ("File missing")
             exit()
+
+def count_in_range(mod):
+    if mod>30000:
+        raise Exception('mod value should be less than or equal to 30000')
+    begin=2
+    add=5
+    while begin<entire_count:
+        # loop to initialize the cell value as 0
+        try:
+            for j in range(14,22):
+                sheet.cell(row=add,column=j).value=0
+
+            # loop to add the count of octant in appropriate cell
+            for i in range(begin,min(row_count+1,mod+begin)):
+                region = sheet.cell(row=i,column=11).value
+                if region==1:
+                    sheet.cell(row=add,column=14).value += 1
+                elif region==-1:
+                    sheet.cell(row=add,column=15).value+=1
+                elif region==2:
+                    sheet.cell(row=add,column=16).value+=1
+                elif region==-2:
+                    sheet.cell(row=add,column=17).value+=1
+                elif region==3:
+                    sheet.cell(row=add,column=18).value+=1
+                elif region==-3:
+                    sheet.cell(row=add,column=19).value+=1
+                elif region==4:
+                    sheet.cell(row=add,column=20).value+=1
+                else:
+                    sheet.cell(row=add,column=21).value+=1
+            # adding range value in appropriate cell
+            x1=str(begin-2)
+            y1=str(min(entire_count-1,mod+begin-3))
+            sheet.cell(row=add,column=13).value=x1+'-'+y1
+
+            # changed the value of for by increasing it by mod
+            begin+=mod
+            #increasing adding row by 1
+            add+=1
+        except FileNotFoundError:
+            print('File Missing!')
+            exit()
