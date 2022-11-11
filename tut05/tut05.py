@@ -122,3 +122,35 @@ def count_in_range(mod):
         except FileNotFoundError:
             print('File Missing!')
             exit()
+
+def check_octant_sign(u, v, w):
+    if u > 0:
+        if v > 0:
+            if w > 0:
+                # (u,v) is +ve and w is +ve so +1
+                return 1
+            else:
+                # (u,v) is +ve  but w is -ve so -1
+                return -1
+        else:
+            if w > 0:
+                #  u>0 and v<0 and w is +ve so +4
+                return 4
+            else:
+                #u>0 and v<0 but w is -ve so -4
+                return -4
+    else:
+        if v > 0:
+            if w > 0:
+                #u<0 and v>0 and w is +ve so +2
+                return 2
+            else:
+                #u<0 and v>0 but w is -ve so -2
+                return -2
+        else:
+            if w > 0:
+                #u<0 and v<0 and w is +ve so +3
+                return 3
+            else:
+                #u<0 and v<0 and w is -ve so -3
+                return -3
