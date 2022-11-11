@@ -154,3 +154,55 @@ def check_octant_sign(u, v, w):
             else:
                 #u<0 and v<0 and w is -ve so -3
                 return -3
+
+def avg_calc():
+    val_U=0
+    val_V=0
+    val_W=0
+    for i in range(2, row_count + 1):
+        try:
+            val_U += sheet.cell(row=i,column=2).value
+            val_V += sheet.cell(row=i,column=3).value
+            val_W += sheet.cell(row=i,column=4).value
+        except FileNotFoundError:
+            print('File not found!')
+    sheet['E1']='u_avg'
+    sheet['F1']='v_avg'
+    sheet['G1']='w_avg'
+    # average of u, v, w
+    try:
+        u_avg=val_U/entire_count
+        v_avg=val_V/entire_count
+        w_avg=val_W/entire_count
+    except(ZeroDivisionError):
+        print("No input data found!!\nDivision by zero is not allowed!")
+        exit()
+    try:
+        #saving average of U in the sheet
+        sheet['E2']=u_avg
+        #saving average of V in the sheet
+        sheet['F2']=v_avg
+        #saving average of W in the sheet
+        sheet['G2']=w_avg
+    except FileNotFoundError:
+        print("File not found!!")
+        exit()
+    except ValueError:
+        print("Row or column values must be at least 1 ")
+        exit()
+
+    sheet['H1']='U-u_avg'
+    sheet['I1']='V-v_avg'
+    sheet['J1']='W-w_avg'
+    for i in range(2, row_count + 1):
+        #calculating and saving U-u_avg in the sheet
+        sub_u_avg = sheet.cell(row=i,column=2).value-u_avg
+        sheet.cell(row=i,column=8).value=sub_u_avg
+
+        #calculating and saving V-v_avg in the sheet
+        sub_v_avg = sheet.cell(row=i,column=3).value-v_avg
+        sheet.cell(row=i,column=9).value=sub_v_avg
+
+        #calculating and saving W-w_avg in the sheet
+        sub_w_avg = sheet.cell(row=i,column=4).value-w_avg
+        sheet.cell(row=i,column=10).value=sub_w_avg
