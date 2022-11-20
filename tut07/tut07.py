@@ -314,3 +314,75 @@ def set_mod_overall_transition_count(outputSheet, mod, total_count):
 
         # Setting transition counts
         transition_count_func(rowStart + 13*i, transCount, outputSheet)
+
+def set_overall_Transition_Count(outputSheet, total_count):
+	# Initializing empty dictionary
+    count_transition = {}
+    for i in range (1,5):
+        for j in range(1,5):
+            count_transition[str(i)+str(j)]=0
+            count_transition[str(i)+str(-j)]=0
+            count_transition[str(-i)+str(j)]=0
+            count_transition[str(-i)+str(-j)]=0
+        
+    # Iterating octants values to fill dictionary
+    start = 0
+
+    # try and except block for string to int conversion
+    try:
+        last = int(outputSheet["K3"].value)
+    except ValueError:
+        print("Sheet input can't be converted to int")
+        exit()
+    except TypeError:
+        print("Sheet doesn't contain integer octant")
+        exit()
+
+    while(start<total_count-1):
+        # try and except block for string to int conversion
+        try:
+            curr = int(outputSheet.cell(row= start+4, column=11).value)
+            count_transition[str(last) + str(curr)]+=1
+            last = curr
+        except ValueError:
+            print("Sheet input can't be converted to int")
+            exit()
+        except TypeError:
+            print("Sheet doesn't contain integer octant")
+            exit()
+
+        start += 1
+    
+    # Setting transitions counted into sheet
+    transition_count_func(2, count_transition, outputSheet)
+
+def set_rank_count(row,countMap, outputSheet):
+    # Copying the count list to sort
+    sortedCount = []
+    count = []
+    for label in octant_sign:
+        count.append(countMap[label])
+
+    for ct in count:
+        sortedCount.append(ct)
+
+    sortedCount.sort(reverse=True)
+
+    rank = []
+
+    for i, el in enumerate(count):
+        for j, ell in enumerate(sortedCount):
+            if(ell==el):
+                rank.append(j+1)
+                sortedCount[j] = -1
+                break
+    rank1Oct = -10
+
+    for j in range(0,8):
+        outputSheet.cell(row = row, column=23+j).value = rank[j]
+        if(rank[j]==1):
+            rank1Oct = octant_sign[j]
+            outputSheet.cell(row = row, column=23+j).fill = yellow_bg    
+
+    outputSheet.cell(row=row , column=31).value = rank1Oct
+    outputSheet.cell(row=row , column=32).value = octant_name_id_mapping[rank1Oct]
