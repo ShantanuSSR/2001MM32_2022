@@ -581,3 +581,29 @@ def pak_innings(team_pak, team_ind):
 
     #saving pak innings
     pak_innings_scorecard(pak_batter_stats, pak_score, pak_fall_of_wickets, ind_bowler_stats, pak_power_play_runs )
+
+def team_ind_list():
+    with open('teams.txt') as team_file:
+        team_ind_str=''
+        for line in team_file:
+            if line[0]=='I':
+                team_ind_str=line
+
+        start_index_ind=team_ind_str.find(':')
+        ind_team_xi=team_ind_str[start_index_ind+2:len(team_ind_str)-1]
+        team_ind=ind_team_xi.split(', ')
+
+        return team_ind
+
+def team_pak_list():
+    with open('teams.txt') as team_file:
+        team_pak_str=''
+        for line in team_file:
+            if line[0]=='P':
+                team_pak_str=line
+
+        start_index_pak=team_pak_str.find(':')
+        pak_team_xi=team_pak_str[start_index_pak+2:len(team_pak_str)-1]
+        team_pak=pak_team_xi.split(', ')
+
+        return team_pak
