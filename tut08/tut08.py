@@ -607,3 +607,14 @@ def team_pak_list():
         team_pak=pak_team_xi.split(', ')
 
         return team_pak
+def scorecard():
+    team_pak = team_pak_list()
+    team_ind = team_ind_list()
+    pak_innings(team_pak, team_ind)
+    ind_innings(team_pak, team_ind)
+
+scorecard()
+
+#This shall be the last lines of the code.
+end_time = datetime.now()
+print('Duration of Program Execution: {}'.format(end_time - start_time))
