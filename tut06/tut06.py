@@ -98,3 +98,67 @@ def attendance_report():
         out.to_excel(fileName,index=False)
 
     attend_consolidated.to_excel(fileName_consolidated,index=False)
+
+    send_mail()
+    ## Writing code for the mail purpose        
+def send_mail():
+    path = os.getcwd().replace("\\","/") + "/output/attendance_report_consolidated.xlsx"
+
+    fromaddr = input("Enter Mail Id: ")
+    toaddr = "cs3842022@gmail.com"
+    Password_ = input("Enter Password: ")
+
+    # instance of MIMEMultipart
+    msg = MIMEMultipart()
+
+    # storing the senders email address
+    msg['From'] = fromaddr
+
+    # storing the receivers email address
+    msg['To'] = toaddr
+
+    # storing the subject
+    msg['Subject'] = "Attendance Report Consolidated"
+
+    # string to store the body of the mail
+    body = "Dear Sir,\n\nPlease find below attached file.\n\nWarm Regards\nShantanu singh\n2001MM32"
+
+    # attach the body with the msg instance
+    msg.attach(MIMEText(body, 'plain'))
+
+    # open the file to be sent
+    filename = 'attendance_report_consolidated.xlsx'
+
+    attachment = open(path, "rb")
+
+    # instance of MIMEBase and named as p
+    p = MIMEBase('application', 'octet-stream')
+
+    # To change the payload into encoded form
+    p.set_payload((attachment).read())
+
+    # encode into base64
+    encoders.encode_base64(p)
+
+    p.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+
+    # attach the instance 'p' to instance 'msg'
+    msg.attach(p)
+
+    # creates SMTP session
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+
+    # start TLS for security
+    s.starttls()
+
+    # Authentication
+    s.login(fromaddr, Password_)
+
+    # Converts the Multipart msg into a string
+    text = msg.as_string()
+
+    # sending the mail
+    s.sendmail(fromaddr, toaddr, text)
+
+    # terminating the session
+    s.quit()
