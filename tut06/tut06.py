@@ -46,7 +46,7 @@ def attendance_report():
     
     except:
         print("Code is not working")
-        
+
     attend_consolidated=pd.read_excel(fileName_consolidated)
     for i in range(0,mc-1):  ##looping the registered students name
         total_Present=0
@@ -75,3 +75,26 @@ def attendance_report():
                                 duplicated_attendance+=1
                         else:
                             t_lec_fake+=1
+        
+        ##setting the data begins here
+            out.at[0,'Roll']=rollno
+            out.at[0,'Name']=rollno_inp.at[i,'Name']
+            out.at[date_index,'Dates']=sp_date
+            attend_consolidated.at[i+1,'Roll']=rollno
+            attend_consolidated.at[i+1,'Name']=rollno_inp.at[i,'Name']
+            out.at[date_index,'Total Attendance Count']=t_lec_count
+            attend_consolidated.at[i+1,f'{sp_date}']='P' if t_lec_act>0 else 'A'
+            if t_lec_act>0: total_Present+=1 
+            out.at[date_index,'Real']=t_lec_act
+            out.at[date_index,'Duplicate']=duplicated_attendance
+            out.at[date_index,'Invalid']= t_lec_fake
+            out.at[date_index,'Absent']=1 if t_lec_act==0 else 0
+            date_index+=1
+
+        ##setting the data into the consolidated file
+        attend_consolidated.at[i+1,'Actual Lecture Taken']=len(total_dates)
+        attend_consolidated.at[i+1,'Total Real']=total_Present
+        attend_consolidated.at[i+1,'% Attendance']=round(total_Present/len(total_dates)*100,2)
+        out.to_excel(fileName,index=False)
+
+    attend_consolidated.to_excel(fileName_consolidated,index=False)
