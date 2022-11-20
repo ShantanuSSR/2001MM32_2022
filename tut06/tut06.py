@@ -46,3 +46,32 @@ def attendance_report():
     
     except:
         print("Code is not working")
+        
+    attend_consolidated=pd.read_excel(fileName_consolidated)
+    for i in range(0,mc-1):  ##looping the registered students name
+        total_Present=0
+        date_index=1
+        rollno=rollno_inp.at[i,'Roll No']
+        fileName=".\output\\"+rollno+'.xlsx'
+        output_file=openpyxl.Workbook()
+        output=output_file.active
+        output_file.save(fileName)
+        out=pd.read_excel(fileName)
+        for sp_date in total_dates: ##looping through the dates on which lectures were held
+            duplicated_attendance=0
+            t_lec,t_lec_act,t_lec_fake,t_lec_abs,percent=len(total_dates),0,0,0,0
+            t_lec_count=0
+            for j in range(0,mc_consolidated-1):
+                if inp.at[j,'Attendance'].split()[0]==rollno:  ##if the roll no. matches
+                    if inp.at[j,'Timestamp'].split()[0] == sp_date:
+                        t_lec_count+=1
+                        time=inp.at[j,'Timestamp'].split()[1]
+                        hour=time.split(':')[0]
+                        minutes=time.split(':')[1]
+                        if ((hour=='14') or (hour=='15' and minutes=='00')):  ##if the timing is within the lecture timings
+                            if t_lec_act==0:
+                                t_lec_act+=1
+                            else:
+                                duplicated_attendance+=1
+                        else:
+                            t_lec_fake+=1
