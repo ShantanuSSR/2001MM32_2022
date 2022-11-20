@@ -569,3 +569,15 @@ def pak_innings(team_pak, team_ind):
             pak_fall_of_wickets.append(fall)
     
     pak_fall_of_wickets.sort(key=get_fall)
+
+    #printing scorecard
+    pak_score = str(pak_total) + '-' + str(pak_outs) + f' ({str(pak_last_over)} Ov)'
+
+    pak_total = f'{pak_total}({pak_outs} Wk, {pak_last_over} Ov)' 
+    fall_statement = ''
+    for outs in pak_fall_of_wickets:
+        fall_statement += outs + ', '
+
+
+    #saving pak innings
+    pak_innings_scorecard(pak_batter_stats, pak_score, pak_fall_of_wickets, ind_bowler_stats, pak_power_play_runs )
