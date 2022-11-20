@@ -591,3 +591,105 @@ def setProcessedDataWithOctant(u_avg, v_avg, w_avg, total_count, inputSheet, out
         except ValueError:
             print("Row or column values must be at least 1 ")
             exit()
+
+def set_input_data(input_file_name, outputSheet):
+	input_file = openpyxl.load_workbook(input_file_name)
+	inputSheet = input_file.active
+
+	start = 2
+	time = inputSheet.cell(start, 1).value
+
+    # Variables to store sum variable
+	u_sum = 0 
+	v_sum = 0
+	w_sum = 0
+
+	# Iterating complete file till time value is not None
+	while(time!=None):
+		try:
+			u_sum += float(inputSheet.cell(start, 2).value)
+			v_sum += float(inputSheet.cell(start, 3).value)
+			w_sum += float(inputSheet.cell(start, 4).value)
+		except ValueError:
+			print("Sheet input can't be converted to float!!")
+			exit()
+		except TypeError:
+			print("Sheet doesn't contain valid float input!!")
+			exit()
+
+		outputSheet.cell(row=start+1, column=1).value = inputSheet.cell(start, 1).value 
+		outputSheet.cell(row=start+1, column=2).value = inputSheet.cell(start, 2).value 
+		outputSheet.cell(row=start+1, column=3).value = inputSheet.cell(start, 3).value 
+		outputSheet.cell(row=start+1, column=4).value = inputSheet.cell(start, 4).value 
+
+		start = start+1
+		time = inputSheet.cell(start, 1).value
+
+	# Setting total count
+	total_count = start-2 # -1 for header and -1 for last None
+	# Calculating average
+	try:
+		u_avg = round(u_sum/total_count, 3)
+		v_avg = round(v_sum/total_count, 3)
+		w_avg = round(w_sum/total_count, 3)
+	except ZeroDivisionError:
+		print("No input data found!!\nDivision by zero occurred!")
+		exit()
+
+	# Setting average values
+	try:
+		outputSheet.cell(row=3, column=5).value = u_avg
+		outputSheet.cell(row=3, column=6).value = v_avg
+		outputSheet.cell(row=3, column=7).value = w_avg
+	except FileNotFoundError:
+		print("Output file not found!!")
+		exit()
+	except ValueError:
+		print("Row or column values must be at least 1 ")
+		exit()
+
+	# Processing input
+	setProcessedDataWithOctant(u_avg, v_avg, w_avg, total_count, inputSheet, outputSheet)
+
+	return total_count
+
+def entry_point(input_file, mod):
+	fileName = input_file.split("\\")[-1]
+	fileName = fileName.split(".xlsx")[0]
+	outputFileName = "output/" + fileName + "cm_val_octant_analysis_mod_" + str(mod) + ".xlsx"
+
+	outputFile = openpyxl.Workbook()
+	outputSheet = outputFile.active
+
+	outputSheet.cell(row=1, column=14).value = "Overall Octant Count"
+	outputSheet.cell(row=1, column=24).value = "Rank #1 Should be highlighted Yellow"
+	outputSheet.cell(row=1, column=35).value = "Overall Transition Count"
+	outputSheet.cell(row=1, column=45).value = "Longest Subsequence Length"
+	outputSheet.cell(row=1, column=49).value = "Longest Subsequence Length with Range"
+	outputSheet.cell(row=2, column=36).value = "To"
+
+	headers = ["T", "U", "V", "W", "U Avg", "V Avg", "W Avg", "U'=U - U avg", "V'=V - V avg","W'=W - W avg", "Octant"]
+	for i, header in enumerate(headers):
+		outputSheet.cell(row=2, column=i+1).value = header
+
+	total_count = set_input_data(input_file, outputSheet)
+	set_overall_octant_rank_count(outputSheet, mod, total_count)
+	set_mod_count(outputSheet, mod, total_count)
+	set_overall_Transition_Count(outputSheet, total_count)
+	set_mod_overall_transition_count(outputSheet, mod, total_count)
+	find_longest_subsequence(outputSheet, total_count)
+
+	outputFile.save(outputFileName)
+
+def octant_analysis(mod=5000):
+	path = os.getcwd()
+	csv_files = glob.glob(os.path.join(path + "\input", "*.xlsx"))
+	
+	for file in csv_files:
+		entry_point(file, mod)
+mod=5000
+octant_analysis(mod)
+
+#This shall be the last lines of the code.
+end_time = datetime.now()
+print('Duration of Program Execution: {}'.format(end_time - start_time))
